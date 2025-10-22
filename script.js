@@ -1,58 +1,77 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bashar | Personal Website</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <canvas id="bg"></canvas> <!-- animated background -->
+// ===============================
+// Dynamic background animation
+// ===============================
+const canvas = document.getElementById("bg");
+const ctx = canvas.getContext("2d");
+let w, h, particles;
 
-  <header class="site-header">
-    <div class="container">
-      <h1 class="logo">Bashar</h1>
-      <nav>
-        <a href="#about">About</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
-      </nav>
-    </div>
-  </header>
+function resize() {
+  w = canvas.width = window.innerWidth;
+  h = canvas.height = window.innerHeight;
+  createParticles();
+}
+window.addEventListener("resize", resize);
 
-  <main class="container">
-    <section class="hero">
-      <h2>Hello — I build things on the web</h2>
-      <p>Student • Security enthusiast • Learner</p>
-      <button id="cta">View Projects</button>
-    </section>
+function createParticles() {
+  particles = [];
+  for (let i = 0; i < 70; i++) {
+    particles.push({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      vx: (Math.random() - 0.5) * 0.8,
+      vy: (Math.random() - 0.5) * 0.8,
+      size: Math.random() * 2 + 1
+    });
+  }
+}
 
-    <section id="about">
-      <h3>About Me</h3>
-      <p>I’m Bashar — I study computing and like reverse engineering, malware analysis, and web projects.</p>
-    </section>
+function draw() {
+  ctx.fillStyle = "rgba(10,15,30,0.3)";
+  ctx.fillRect(0, 0, w, h);
+  ctx.fillStyle = "#6ee7b7";
+  particles.forEach(p => {
+    p.x += p.vx;
+    p.y += p.vy;
 
-    <section id="projects">
-      <h3>Projects</h3>
-      <ul id="project-list"></ul>
-    </section>
+    if (p.x < 0 || p.x > w) p.vx *= -1;
+    if (p.y < 0 || p.y > h) p.vy *= -1;
 
-    <section id="contact">
-      <h3>Contact</h3>
-      <form id="contact-form">
-        <label>Name <input type="text" name="name" required></label>
-        <label>Email <input type="email" name="email" required></label>
-        <label>Message <textarea name="message" required></textarea></label>
-        <button type="submit">Send</button>
-      </form>
-      <p id="form-result" style="margin-top:10px;color:var(--accent)"></p>
-    </section>
-  </main>
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    ctx.fill();
+  });
+  requestAnimationFrame(draw);
+}
 
-  <footer class="site-footer">
-    © <span id="year"></span> Bashar — Hosted on GitHub Pages
-  </footer>
+resize();
+draw();
 
-  <script src="script.js"></script>
-</body>
-</html>
+// ===============================
+// Main content interactivity
+// ===============================
+document.getElementById('year').textContent = new Date().getFullYear();
+
+const projects = [
+  {title: 'PhishGuardX (concept)', desc: 'Spear phishing detection app (React Native + Flask)'},
+  {title: 'Malware Analysis Lab', desc: 'Guides & scripts for safe dynamic/static analysis'},
+  {title: 'POS System (course)', desc: 'C++ project for class'}
+];
+
+const list = document.getElementById('project-list');
+projects.forEach(p => {
+  const li = document.createElement('li');
+  li.innerHTML = `<strong>${p.title}</strong><div style="font-size:13px;color:#9aa4b2;margin-top:6px">${p.desc}</div>`;
+  list.appendChild(li);
+});
+
+document.getElementById('cta').addEventListener('click', () => {
+  document.querySelector('#projects').scrollIntoView({behavior: 'smooth'});
+});
+
+document.getElementById('contact-form').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const result = document.getElementById('form-result');
+  result.textContent = `Thanks ${form.name.value}! I will contact you at ${form.email.value}.`;
+  form.reset();
+});
