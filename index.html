@@ -1,9 +1,9 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Bashar's Portfolio</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bashar | Personal Website</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -19,49 +19,48 @@
   </header>
 
   <main class="container">
-    <section id="hero" class="hero">
+    <section class="hero">
       <h2>Hello — I build things on the web</h2>
       <p>Student • Security enthusiast • Learner</p>
-      <button id="cta">View Projects</button>
+      <button onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">View Projects</button>
     </section>
 
     <section id="about">
-      <h3>About me</h3>
+      <h3>About Me</h3>
       <p>I’m Bashar — I study computing and like reverse engineering, malware analysis, and web projects.</p>
     </section>
 
     <section id="projects">
       <h3>Projects</h3>
       <ul id="project-list">
-        <!-- projects will be injected by script.js -->
+        <li>
+          <strong>PhishGuardX (concept)</strong><br>
+          <small>Spear phishing detection app (React Native + Flask)</small>
+        </li>
+        <li>
+          <strong>Malware Analysis Lab</strong><br>
+          <small>Guides & scripts for safe dynamic/static analysis</small>
+        </li>
+        <li>
+          <strong>POS System (course)</strong><br>
+          <small>C++ project for class</small>
+        </li>
       </ul>
     </section>
 
     <section id="contact">
       <h3>Contact</h3>
       <form id="contact-form">
-        <label>
-          Name
-          <input type="text" name="name" required>
-        </label>
-        <label>
-          Email
-          <input type="email" name="email" required>
-        </label>
-        <label>
-          Message
-          <textarea name="message" rows="4" required></textarea>
-        </label>
+        <label>Name <input type="text" required></label>
+        <label>Email <input type="email" required></label>
+        <label>Message <textarea required></textarea></label>
         <button type="submit">Send</button>
       </form>
-      <p id="form-result" aria-live="polite"></p>
     </section>
   </main>
 
   <footer class="site-footer">
-    <div class="container">© <span id="year"></span> Bashar — Hosted on GitHub Pages</div>
+    © 2025 Bashar — Hosted on GitHub Pages
   </footer>
-
-  <script src="script.js"></script>
 </body>
 </html>
