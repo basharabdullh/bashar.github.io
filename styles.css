@@ -102,6 +102,8 @@ nav a:hover::after {
   box-shadow: 0 8px 40px rgba(2, 6, 23, 0.6);
   text-align: center;
   animation: fadeIn 1.5s ease-out;
+  opacity: 1; /* ensure it stays visible */
+  transform: none;
 }
 
 .hero h2 {
@@ -133,7 +135,7 @@ nav a:hover::after {
 }
 
 /* ===== Sections ===== */
-section {
+section:not(.hero) {
   margin: 26px 0;
   padding: 22px;
   background: var(--card);
@@ -144,7 +146,7 @@ section {
   animation: fadeUp 1s ease forwards;
 }
 
-section:nth-child(even) {
+section:nth-child(even):not(.hero) {
   animation-delay: 0.3s;
 }
 
